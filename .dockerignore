@@ -11,3 +11,4 @@ campaign-efficiency-ddd
 .git
 .DS_Store
 *.db
+.env

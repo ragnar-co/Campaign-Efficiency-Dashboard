@@ -23,12 +23,13 @@
 |---|---|---|---|---|
 | `APP_ENV` | yes | no | `production` | value from ARCHITECTURE `environment` enum |
 | `DATABASE_URL` | yes | no | `sqlite:////data/app.db` | persistent volume path |
-| `COMPANY_AI_ENDPOINT` | only for AI bonus | no | `https://ai.company.example/v1/...` | actual value supplied by company |
-| `COMPANY_AI_API_KEY` | only for AI bonus | yes | `***` | Coolify secret store/environment secret |
-| `COMPANY_AI_MODEL` | if endpoint requires | no | `company-model-id` | actual identifier supplied by company |
+| `OPENROUTER_API_KEY` | only for AI bonus | yes | `***` | Coolify secret store/environment secret; never committed |
+| `OPENROUTER_BASE_URL` | no (defaults if unset) | no | `https://openrouter.ai/api/v1` | OpenRouter API base URL |
+| `OPENROUTER_MODEL` | no (defaults if unset) | no | `anthropic/claude-sonnet-4.6` | OpenRouter model identifier |
 
+- AI provider decision: OpenRouter (`https://openrouter.ai/api/v1/chat/completions`), chosen as the company AI endpoint for the Campaign Review Brief bonus (supersedes the earlier generic `COMPANY_AI_*` placeholder names)
 - Secret store: Coolify environment/secret management
-- Secret rotation cadence: `null` — calibration owner: Company AI Platform Owner/Security Owner
+- Secret rotation cadence: `null` — calibration owner: Security Owner
 
 # Rollback Procedure
 

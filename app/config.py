@@ -9,20 +9,33 @@ from __future__ import annotations
 import os
 from dataclasses import dataclass
 
+from dotenv import load_dotenv
+
+# Local-dev convenience only: fills in any var not already set in the real
+# environment (override=False, the default) — never overrides Coolify/CI
+# environment variables, and silently no-ops if no .env file is present.
+load_dotenv()
+
 VALID_ENVIRONMENTS = {"development", "staging", "production"}
+
+
+DEFAULT_OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
+DEFAULT_OPENROUTER_MODEL = "anthropic/claude-sonnet-4.6"
 
 
 @dataclass(frozen=True)
 class Settings:
     app_env: str
     database_url: str
-    company_ai_endpoint: str | None
-    company_ai_api_key: str | None
-    company_ai_model: str | None
+    openrouter_api_key: str | None
+    openrouter_base_url: str
+    openrouter_model: str
 
     @property
     def ai_configured(self) -> bool:
-        return bool(self.company_ai_endpoint and self.company_ai_api_key)
+        # Base URL/model have safe non-secret defaults; only the API key gates
+        # whether the AI bonus is usable.
+        return bool(self.openrouter_api_key)
 
 
 def load_settings() -> Settings:
@@ -37,7 +50,7 @@ def load_settings() -> Settings:
     return Settings(
         app_env=app_env,
         database_url=database_url,
-        company_ai_endpoint=os.environ.get("COMPANY_AI_ENDPOINT") or None,
-        company_ai_api_key=os.environ.get("COMPANY_AI_API_KEY") or None,
-        company_ai_model=os.environ.get("COMPANY_AI_MODEL") or None,
+        openrouter_api_key=os.environ.get("OPENROUTER_API_KEY") or None,
+        openrouter_base_url=os.environ.get("OPENROUTER_BASE_URL") or DEFAULT_OPENROUTER_BASE_URL,
+        openrouter_model=os.environ.get("OPENROUTER_MODEL") or DEFAULT_OPENROUTER_MODEL,
     )

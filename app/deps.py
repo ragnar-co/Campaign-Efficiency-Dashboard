@@ -32,6 +32,6 @@ def get_settings(request: Request) -> Settings:
 
 def get_ai_client() -> AIClient | None:
     """Default is None: production code falls back to building a real
-    CompanyAIClient from Settings. Tests override this dependency to inject
+    OpenRouterClient from Settings. Tests override this dependency to inject
     a stub AIClient instead."""
     return None

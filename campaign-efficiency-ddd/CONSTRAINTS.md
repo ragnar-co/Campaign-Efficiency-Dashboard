@@ -35,4 +35,4 @@
 
 - Coolify เป็น deployment target ที่โจทย์กำหนด
 - Company Git repository เป็นปลายทาง source code ที่โจทย์กำหนด
-- Company AI endpoint เป็น integration สำหรับโบนัส; endpoint URL, model identifier, quota และ request contract: `null` — calibration owner: Company AI Platform Owner
+- Company AI endpoint เป็น integration สำหรับโบนัส; provider = OpenRouter, base URL `https://openrouter.ai/api/v1`, endpoint `/chat/completions`, model `anthropic/claude-sonnet-4.6`, auth `Authorization: Bearer $OPENROUTER_API_KEY`; quota/rate-limit ของ OpenRouter account ยังเป็น `null` — calibration owner: Company AI Platform Owner

@@ -60,7 +60,7 @@ def test_ai_secret_never_appears_in_any_response(app_factory):
     app = app_factory(ai_configured=True)
     app.dependency_overrides[get_ai_client] = lambda: _StubClient()
     client = TestClient(app)
-    secret = app.state.settings.company_ai_api_key
+    secret = app.state.settings.openrouter_api_key
     assert secret == "test-key"
 
     dataset_id = _import_valid(client)

@@ -29,21 +29,34 @@
 - Unit layer target: `null` — calibration owner: Developer; measurement method: pytest coverage report; enforcement: guideline until calibrated
 - Integration layer target: `null` — calibration owner: Developer; measurement method: pytest coverage/report + explicit contract case count; enforcement: guideline until calibrated
 - Regardless of percentage, all P0 acceptance criteria and every API endpoint must have executable validation before submission
+- Actual measured coverage (informational only, not a gate): 97% line coverage, 53 passing tests (`pytest -q --cov=app`), last measured 2026-10-05. Uncovered lines are almost entirely the real-network branch of `OpenRouterClient` (untestable without spending live quota) and a few defensive/unreachable error branches.
 
 # Security Test Results
 
 - Planned checks: filename/path traversal, HTML escaping, SQL injection resistance via parameterized access, secret absence from repository/log response, malformed CSV handling
-- Actual result: `null` — execution owner: Developer; fill from real test run before claiming launch readiness
+- Actual result (executed 2026-10-05, `tests/test_security.py`): all pass —
+  - Path traversal: client filename `../../../../etc/passwd.csv` imports successfully and no file is written outside the app; filename is only ever stored as a DB text label, never used as a filesystem path
+  - SQL injection: `channel=Email' OR '1'='1` query param returns zero rows (parameterized ORM query), no error
+  - Malformed/non-CSV upload (raw binary bytes): rejected with 422, never a 500
+  - Secret leakage: `OPENROUTER_API_KEY` value never appears in `/health`, `/`, summary, or brief response bodies, including on AI upstream failure
+  - HTML escaping: campaign/channel text is rendered via `textContent` only in `app/static/app.js`, never `innerHTML`/raw interpolation — verified by manual browser check with a campaign name containing `<b>Test</b>`, which rendered as literal text
 
 # Performance Test Results
 
-- Benchmark dataset: uploaded CSV with 20,966 rows
-- Measurements to capture: import duration, dashboard summary duration, Channel filter duration, memory usage
-- Targets are owned by PRD/ARCHITECTURE and currently `null`
-- Actual measured results: `null` — execution owner: Developer on deployed/container environment
+- Benchmark dataset: uploaded CSV with 20,966 rows (`Raw Data/ant_campaign_efficiency_mock_2_55MB.csv`, ~2.55 MB)
+- Targets are owned by PRD/ARCHITECTURE and currently `null` (no SLO to pass/fail against)
+- Actual measured results (2026-10-05, local `uvicorn` dev server, Apple Silicon Mac, not the deployed container — re-measure on the real Coolify host before relying on these for capacity planning):
+  - CSV import (validate + atomic persist, 20,966 rows): ~0.74s
+  - `GET /summary`: ~0.02s
+  - `GET /channels`: ~0.01s
+  - `GET /campaigns?channel=Email` (2,575 rows): ~0.03s
+  - `GET /campaigns` (all 20,966 rows, no filter): ~0.27s
+  - Process RSS after import + several queries: ~131 MB
+  - Live OpenRouter brief generation call (`anthropic/claude-sonnet-4.6`, full 7-channel dataset facts): ~24s end-to-end
 
 # UAT Sign-off
 
 - Growth Marketing Analyst: `null` — sign-off owner: challenge submitter/reviewer
 - Growth Marketing Manager: `null` — sign-off owner: challenge submitter/reviewer
 - Required UAT walk-through: upload valid CSV, inspect KPI/chart/table, filter Channel, confirm lowest CPQL; AI brief when bonus integration is configured
+- Developer self-walkthrough completed 2026-10-05 in a real browser against the full 20,966-row dataset: KPI cards, both channel charts, Channel Comparison table, Campaign Details with search/pagination, Channel filter, and a live-generated AI brief (OpenRouter) all verified against independently recomputed ground truth (see CHANGELOG.md) — this is a developer check, not the formal UAT sign-off above

@@ -47,7 +47,7 @@ FastAPI application
 
 - Coolify: deployment/orchestration target
 - Company Git repository: source control/CI source
-- Company AI endpoint: optional Campaign Review Brief generation; integration must be isolated behind an AI client interface
+- Company AI endpoint: OpenRouter (`https://openrouter.ai/api/v1/chat/completions`, model `anthropic/claude-sonnet-4.6`) for optional Campaign Review Brief generation; integration is isolated behind an `AIClient` interface (`app/services/ai_client.py`) so the provider can change without touching dashboard/analytics code
 - No ad-platform API integration in MVP
 
 # Observability & SLOs

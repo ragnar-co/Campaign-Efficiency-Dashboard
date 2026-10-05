@@ -84,7 +84,7 @@ def generate_and_save_brief(
         facts_json=json.dumps(content.facts),
         items_to_verify_json=json.dumps(content.items_to_verify),
         experiment_proposals_json=json.dumps(content.next_experiment_proposals),
-        model_reference=settings.company_ai_model,
+        model_reference=settings.openrouter_model,
     )
 
 

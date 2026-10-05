@@ -1,8 +1,8 @@
 """AI bonus workflow tests — TC-11 (stub success), TC-12 (failure), FR-12..FR-14.
 
 Per TESTING.md: "CP-06 may be exercised with AI client stub when real quota
-is unavailable." No real COMPANY_AI_ENDPOINT credentials were available, so
-these tests inject a stub AIClient via dependency override.
+is unavailable." No OPENROUTER_API_KEY credentials were available in this
+environment, so these tests inject a stub AIClient via dependency override.
 """
 
 from __future__ import annotations

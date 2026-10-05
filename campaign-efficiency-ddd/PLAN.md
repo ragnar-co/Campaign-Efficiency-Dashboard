@@ -283,12 +283,12 @@ APP_ENV
 DATABASE_URL
 ```
 
-Optional AI configuration:
+Optional AI configuration (OpenRouter):
 
 ```text
-COMPANY_AI_ENDPOINT
-COMPANY_AI_API_KEY
-COMPANY_AI_MODEL
+OPENROUTER_API_KEY
+OPENROUTER_BASE_URL
+OPENROUTER_MODEL
 ```
 
 Never commit real secret values.

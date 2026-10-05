@@ -11,9 +11,9 @@ def make_settings(db_path, ai_configured: bool = False) -> Settings:
     return Settings(
         app_env="development",
         database_url=f"sqlite:///{db_path}",
-        company_ai_endpoint="https://ai.example.test/v1/brief" if ai_configured else None,
-        company_ai_api_key="test-key" if ai_configured else None,
-        company_ai_model="test-model" if ai_configured else None,
+        openrouter_api_key="test-key" if ai_configured else None,
+        openrouter_base_url="https://openrouter.ai/api/v1",
+        openrouter_model="anthropic/claude-sonnet-4.6",
     )
 
 

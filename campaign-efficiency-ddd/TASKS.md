@@ -36,4 +36,12 @@ T-01 -> T-02 -> T-03 -> T-04 -> T-05 -> T-06 -> T-07 -> T-09
 
 | Task | Owner | Estimate | Status |
 |---|---|---|---|
-| T-01..T-09 | Developer using Claude Code/Codex | `null` — calibration owner: Developer; fit work within fixed 120-minute challenge by prioritizing P0 requirements | Not Started |
+| T-01 Bootstrap FastAPI app + config | Claude Code | `null` | Done |
+| T-02 Create SQLite schema/migration | Claude Code | `null` | Done |
+| T-03 Implement CSV parser/validation + atomic import | Claude Code | `null` | Done |
+| T-04 Implement analytics service | Claude Code | `null` | Done |
+| T-05 Build dashboard UI | Claude Code | `null` | Done |
+| T-06 Add automated tests | Claude Code | `null` | Done — 53 tests passing, 97% coverage |
+| T-07 Dockerize + Coolify config | Claude Code | `null` | Done — image builds and runs locally; Coolify deploy itself is Blocked (no Coolify credentials in this environment) |
+| T-08 Integrate company AI client | Claude Code | `null` | Done — OpenRouter (`anthropic/claude-sonnet-4.6`) integrated, live call verified 2026-10-05 |
+| T-09 Final validation + repository push | Claude Code | `null` | In Progress — local validation/commit complete; push to company Git repository is Blocked (no remote configured in this environment) |
