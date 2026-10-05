@@ -1,0 +1,13 @@
+.venv
+__pycache__
+**/__pycache__
+*.pyc
+.pytest_cache
+.coverage
+data
+tests
+Raw Data
+campaign-efficiency-ddd
+.git
+.DS_Store
+*.db

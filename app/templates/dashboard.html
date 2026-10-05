@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Campaign Efficiency Dashboard</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js" defer></script>
+  <script src="/static/app.js" defer></script>
+</head>
+<body>
+  <header class="app-header">
+    <h1>Campaign Efficiency Dashboard</h1>
+  </header>
+
+  <main>
+    <section class="panel" aria-labelledby="upload-heading">
+      <h2 id="upload-heading">Upload Campaign CSV</h2>
+      <form id="upload-form">
+        <label for="csv-file">CSV file</label>
+        <input type="file" id="csv-file" name="file" accept=".csv" required>
+        <button type="submit">Import</button>
+      </form>
+      <div id="validation-result" role="status" tabindex="-1"></div>
+    </section>
+
+    <section class="panel" id="kpi-section" aria-labelledby="kpi-heading" hidden>
+      <h2 id="kpi-heading">Dataset KPIs</h2>
+      <div class="kpi-grid" id="kpi-grid"></div>
+    </section>
+
+    <section class="panel" id="channel-section" aria-labelledby="channel-heading" hidden>
+      <h2 id="channel-heading">Channel Comparison</h2>
+      <p id="best-channel-callout" class="callout"></p>
+      <canvas id="channel-chart" width="600" height="300" role="img" aria-label="Channel CPQL comparison chart"></canvas>
+      <table id="channel-table">
+        <caption>Channel comparison (accessible table form of the chart above)</caption>
+        <thead>
+          <tr>
+            <th scope="col">Channel</th>
+            <th scope="col">Spend (THB)</th>
+            <th scope="col">Leads</th>
+            <th scope="col">Qualified Leads</th>
+            <th scope="col">CPL (Cost per Lead)</th>
+            <th scope="col">CPQL (Cost per Qualified Lead)</th>
+            <th scope="col">Qualification Rate</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+
+    <section class="panel" id="campaign-section" aria-labelledby="campaign-heading" hidden>
+      <h2 id="campaign-heading">Campaign Detail</h2>
+      <label for="channel-filter">Channel</label>
+      <select id="channel-filter">
+        <option value="">All</option>
+      </select>
+      <table id="campaign-table">
+        <thead>
+          <tr>
+            <th scope="col">Campaign ID</th>
+            <th scope="col">Campaign Name</th>
+            <th scope="col">Channel</th>
+            <th scope="col">Spend (THB)</th>
+            <th scope="col">Leads</th>
+            <th scope="col">Qualified Leads</th>
+            <th scope="col">CPL</th>
+            <th scope="col">CPQL</th>
+            <th scope="col">Qualification Rate</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+
+    <section class="panel" id="brief-section" aria-labelledby="brief-heading" hidden>
+      <h2 id="brief-heading">AI Campaign Review Brief</h2>
+      <button type="button" id="generate-brief-btn">Generate Brief</button>
+      <div id="brief-status" role="status"></div>
+      <div id="brief-view"></div>
+    </section>
+  </main>
+
+  <template id="metric-card-template">
+    <div class="metric-card">
+      <div class="metric-label"></div>
+      <div class="metric-value"></div>
+    </div>
+  </template>
+</body>
+</html>
